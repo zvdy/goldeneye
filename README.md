@@ -2,13 +2,9 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/zvdy/goldeneye)](https://goreportcard.com/report/github.com/zvdy/goldeneye)
 
-
-
-
-<div style="text-align: center;">
+<p align="center">
   <img src="https://i.ibb.co/WV14jNj/logo.png" alt="GoldenEye Logo" width="100" height="100">
-</div>
-
+</p>
 
 GoldenEye is a powerful HTTP DoS (Denial of Service) attack tool designed to stress test web servers. It allows you to simulate multiple concurrent connections to a target URL, using various HTTP methods and user agents. This tool is intended for educational purposes and to test the robustness of your own web servers.
 
