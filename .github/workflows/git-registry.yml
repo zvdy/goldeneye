@@ -1,0 +1,24 @@
+name: Upload Image to Git Registry
+
+on: 
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Login to Git Registry
+              run: echo "${{ secrets.GIT_REGISTRY_PASSWORD }}" | docker login -u "${{ secrets.GIT_REGISTRY_USERNAME }}" --password-stdin "${{ secrets.GIT_REGISTRY_URL }}"
+
+            - name: Build and Push Image
+              run: |
+                  docker build -t "${{ secrets.GIT_REGISTRY_URL }}/${{ secrets.GIT_REGISTRY_USERNAME }}/my-image" .
+                  docker push "${{ secrets.GIT_REGISTRY_URL }}/${{ secrets.GIT_REGISTRY_USERNAME }}/my-image"
+
+
+
+    
