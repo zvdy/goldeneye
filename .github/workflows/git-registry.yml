@@ -16,8 +16,8 @@ jobs:
 
             - name: Build and Push Image
               run: |
-                  docker build -t "${{ secrets.GIT_REGISTRY_URL }}/${{ secrets.GIT_REGISTRY_USERNAME }}/my-image" .
-                  docker push "${{ secrets.GIT_REGISTRY_URL }}/${{ secrets.GIT_REGISTRY_USERNAME }}/my-image"
+                  docker build -t "${{ secrets.GIT_REGISTRY_URL }}/${{ secrets.GIT_REGISTRY_USERNAME }}/goldeneye:latest" .
+                  docker push "${{ secrets.GIT_REGISTRY_URL }}/${{ secrets.GIT_REGISTRY_USERNAME }}/goldeneye:latest"
 
 
 
