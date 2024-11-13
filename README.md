@@ -54,6 +54,69 @@ To run GoldenEye, use the following command:
 
 This command will start a DoS attack on `http://example.com` with `100 workers`, each opening `50 sockets`, using the `POST` method, and enabling debug mode.
 
+### Docker
+
+To build and run the application using Docker, follow these steps:
+
+1. **Build the Docker image**
+
+   ```sh
+   docker build -t goldeneye .
+   ```
+
+2. **Run the Docker container**
+
+   ```sh
+   docker run -it --rm goldeneye <url> [OPTIONS]
+   ```
+
+   Replace `<url>` and `[OPTIONS]` with the appropriate values for your application.
+
+### Docker Hub Repository
+
+You can also pull the pre-built Docker image from Docker Hub:
+
+```sh
+docker pull zvdy/goldeneye
+```
+
+Docker Hub Repository: [zvdy/goldeneye](https://hub.docker.com/repository/docker/zvdy/goldeneye/general)
+
+### Example
+
+To run the application with a specific URL and options:
+
+```sh
+docker run -it --rm zvdy/goldeneye http://example.com 
+```
+
+### Dockerfile
+
+Ensure you have a file:///home/zvdy/Desktop/go-ldeneye/Dockerfile in your project root with the following content:
+
+```dockerfile
+# Use the official Golang image as the base image
+FROM golang:1.17-alpine
+
+# Set the Current Working Directory inside the container
+WORKDIR /app
+
+# Copy go mod and sum files
+COPY go.mod go.sum ./
+
+# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
+RUN go mod download
+
+# Copy the source from the current directory to the Working Directory inside the container
+COPY . .
+
+# Build the Go app
+RUN go build -o goldeneye ./cmd/goldeneye
+
+# Command to run the executable
+CMD ["./goldeneye"]
+```
+
 ### Testing
 
 You can run the tests in order to check the functionality too:
