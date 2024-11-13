@@ -1,5 +1,7 @@
 # GoldenEye
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/zvdy/goldeneye)](https://goreportcard.com/report/github.com/zvdy/goldeneye)
+
 GoldenEye is a powerful HTTP DoS (Denial of Service) attack tool designed to stress test web servers. It allows you to simulate multiple concurrent connections to a target URL, using various HTTP methods and user agents. This tool is intended for educational purposes and to test the robustness of your own web servers.
 
 ## Features
@@ -48,37 +50,14 @@ To run GoldenEye, use the following command:
 
 This command will start a DoS attack on `http://example.com` with `100 workers`, each opening `50 sockets`, using the `POST` method, and enabling debug mode.
 
-You can deploy a simple python server to stress and test the tool:
+### Testing
 
-```py
-import http.server
-import socketserver
+You can run the tests in order to check the functionality too:
 
-PORT = 8000
-
-class RequestHandler(http.server.SimpleHTTPRequestHandler):
-    request_count = 0
-
-    def do_GET(self):
-        RequestHandler.request_count += 1
-        print(f"Received {RequestHandler.request_count} requests")
-        self.send_response(200)
-        self.send_header("Content-type", "text/html")
-        self.end_headers()
-        self.wfile.write(b"Hello, world!")
-
-    def do_POST(self):
-        RequestHandler.request_count += 1
-        print(f"Received {RequestHandler.request_count} requests")
-        self.send_response(200)
-        self.send_header("Content-type", "text/html")
-        self.end_headers()
-        self.wfile.write(b"Hello, world!")
-
-with socketserver.TCPServer(("", PORT), RequestHandler) as httpd:
-    print(f"Serving on port {PORT}")
-    httpd.serve_forever()
+```sh
+go test -v ./...
 ```
+
 
 ## Use Cases
 
