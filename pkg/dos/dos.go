@@ -1,6 +1,7 @@
 package dos
 
 import (
+	"context"
 	"fmt"
 	"sync"
 )
@@ -30,7 +31,7 @@ func NewGoldenEye(url string, workers, sockets int, method string, debug, noSSLC
 	}
 }
 
-func (g *GoldenEye) Fire() {
+func (g *GoldenEye) Fire(ctx context.Context) {
 	fmt.Printf("Hitting webserver in mode '%s' with %d workers running %d connections each. Hit CTRL+C to cancel.\n", g.Method, g.Workers, g.Sockets)
 
 	var wg sync.WaitGroup
@@ -39,7 +40,14 @@ func (g *GoldenEye) Fire() {
 		go func() {
 			defer wg.Done()
 			striker := NewStriker(g.URL, g.Sockets, g.Counter, g.Method, g.Debug, g.NoSSLCheck, g.UserAgents)
-			striker.Run()
+			for {
+				select {
+				case <-ctx.Done():
+					return
+				default:
+					striker.Run()
+				}
+			}
 		}()
 	}
 	wg.Wait()
